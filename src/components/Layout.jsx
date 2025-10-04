@@ -58,9 +58,13 @@ function Layout({ children }) {
       value={{ modalData, openModal, closeModal, showFormulaModal, setShowFormulaModal, showInfoModal, setShowInfoModal }}
     >
       <div className="flex min-h-screen">
-        <Sidebar />
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
         <main className="flex-grow p-6">{children}</main>
-        <BottomNav />
+        <div className="md:hidden">
+          <BottomNav />
+        </div>
         {/* Open Sidebar Button */}
         <button
           id="openSidebar"

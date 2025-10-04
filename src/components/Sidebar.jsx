@@ -24,7 +24,7 @@ function Sidebar() {
     : sections;
 
   return (
-    <aside className="bg-[#282828] min-w-[280px] max-w-[350px] p-6 border-r border-[#424242] flex flex-col">
+    <aside className="bg-[#282828] min-w-[280px] max-w-[350px] p-6 border-r border-[#424242] flex flex-col h-full">
       <div className="mb-6">
         <img src={logo} alt="Sidebar Logo" className="w-full h-auto max-w-48 object-contain rounded-full border-4 border-gray-600 shadow-lg" />
       </div>
