@@ -1,0 +1,77 @@
+import { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
+
+// Function to detect MathML support
+const supportsMathML = () => {
+  const div = document.createElement('div');
+  div.innerHTML = '<math><mtext>hello</mtext></math>';
+  document.body.appendChild(div);
+  const isSupported = div.firstChild && div.firstChild.nodeName === 'MATH';
+  document.body.removeChild(div);
+  return isSupported;
+};
+
+function FormulaModal({ isOpen, onClose, title, formula, isTop }) {
+  const [katexOutput, setKatexOutput] = useState('html'); // Default to HTML
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  // Key listener for Escape
+  useEffect(() => {
+    if (!isOpen || !isTop) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, isTop, onClose]);  
+
+  useEffect(() => {
+    // Check MathML support on mount
+    setKatexOutput(supportsMathML() ? 'mathml' : 'html');
+  }, []);
+
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-[100] transition-opacity duration-300"
+      onClick={handleOverlayClick}
+    >
+      <div className="bg-[#282828] p-6 rounded-lg max-w-[1400px] max-h-[95vh] overflow-y-auto shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl text-[#fa7532] flex-grow text-center font-bold">{title}</h3>
+          <button
+            onClick={onClose}
+            className="top-4 right-4 text-[#e0e0e0] hover:text-[#fa7532] text-xl hover:cursor-pointer"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
+        <div className="text-left text-[#e0e0e0] text-lg leading-relaxed markdown-content">
+          <ReactMarkdown
+            remarkPlugins={[remarkMath]}
+            rehypePlugins={[[rehypeKatex, { output: katexOutput }]]}
+          >
+            {formula || 'Formel kommer här'}
+          </ReactMarkdown>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default FormulaModal;

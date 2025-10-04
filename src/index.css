@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1c1c1c;
+  color: #e0e0e0;
+}
+
+.calculation-icon-svg {
+  width: 35px;
+  height: 35px;
+  fill: none;
+  stroke: #fa7532;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  padding: 10px;
+  box-sizing: content-box;
+}

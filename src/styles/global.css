@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@layer components {
+    .calc-form-input {
+        @apply w-full p-2 bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532] rounded-md;
+    }
+
+    .calc-form-input-split {
+        @apply w-full p-2 bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532] rounded-none rounded-l-md;
+    }
+
+    .calc-form-input-span {
+        @apply p-2 text-gray-900 bg-gray-200 border-l-0 border border-gray-300 rounded-r-md;
+    }
+
+    .calc-form-label {
+        @apply mb-1 text-gray-300;
+    }
+
+    .calc-form-select {
+        @apply p-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532];
+    }
+
+    .calc-form-select-split {
+        @apply p-2 bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532] rounded-none rounded-r-md border-l-0;
+    }
+
+    .calc-form-submit-button {
+        @apply py-3 px-6 bg-[#fa7532] hover:bg-[#c95f26] text-white font-bold rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#fa7532] focus:opacity-75 hover:cursor-pointer;
+    }
+
+    .calc-form-input-error {
+        @apply border-red-500 border-[3px] focus:ring-red-500 focus:border-red-500;
+    }
+
+    .markdown-content ul {
+        @apply list-disc list-inside text-gray-200 mb-4 ml-4;
+    }
+    .markdown-content li {
+        @apply mb-1 text-base;
+    }
+    .markdown-content p {
+        @apply text-gray-200 mb-2 text-base;
+    }
+    .markdown-content .katex-display {
+        @apply mb-2 pb-2 border-b-[1px] border-[#4b5563];
+    }
+    .markdown-content .newline {
+        @apply mb-2;
+    }
+}
