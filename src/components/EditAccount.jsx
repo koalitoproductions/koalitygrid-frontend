@@ -49,7 +49,7 @@ function EditAccount() {
         })
         .catch(err => {
           console.error('Error fetching profile photo:', err);
-          setPreviewUrl('/media/profile_photos/default.png');
+          setPreviewUrl('/media/defaults/default.png');
         });
     }
   }, [isLoggedIn]);
@@ -119,7 +119,7 @@ const handlePhotoUpload = async (e) => {
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-[#fa7532]"
             />
-            {previewUrl !== 'http://localhost:8000/media/profile_photos/default.png' && (
+            {previewUrl !== 'http://localhost:8000/media/defaults/default.png' && (
               <button
                 type="button"
                 onClick={handlePhotoDelete}
