@@ -42,7 +42,7 @@ function EditAccount() {
 // Fetch current profile photo on mount
   useEffect(() => {
     if (isLoggedIn) {
-      api.get('auth/user-profile/') // Adjust endpoint if needed
+      api.get('auth/profile-photo/') // Adjust endpoint if needed
         .then(response => {
           const photoUrl = response.data.profile_photo;
           setPreviewUrl(photoUrl);
@@ -84,7 +84,7 @@ const handlePhotoUpload = async (e) => {
       const formData = new FormData();
       formData.append('profile_photo', file);
       try {
-        const response = await api.post('auth/upload-profile-photo/', formData, {
+        const response = await api.post('auth/profile-photo/', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         console.log('Photo upload response:', response.data);
@@ -98,7 +98,7 @@ const handlePhotoUpload = async (e) => {
 
   const handlePhotoDelete = async () => {
     try {
-      const response = await api.delete('auth/upload-profile-photo/');
+      const response = await api.delete('auth/profile-photo/');
       console.log('Photo delete response:', response.data);
       setPreviewUrl(response.data.photo_url); // Revert to default
     } catch (err) {
@@ -177,7 +177,7 @@ const handlePhotoUpload = async (e) => {
         <button 
           type="submit" 
           disabled={!isPasswordsMatch || !oldPassword || !newPassword || loading}
-          className="w-full bg-[#fa7532] text-[#e0e0e0] py-2 rounded hover:bg-[#fb8c4f] transition disabled:bg-gray-500 disabled:cursor-not-allowed">
+          className="w-full bg-[#fa7532] text-[#e0e0e0] py-2 rounded hover:bg-[#fb8c4f] hover:cursor-pointer transition disabled:bg-gray-500 disabled:cursor-not-allowed">
           {loading ? 'Ändrar lösenord...' : 'Ändra lösenord'} {/* Conditional text */}
         </button>
       </form>
