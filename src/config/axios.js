@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: import.meta.env.VITE_API_HOST ?? (console.warn('API_HOST not set, using default'), 'http://localhost:8000'),
 });
 
 api.interceptors.request.use(

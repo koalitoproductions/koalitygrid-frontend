@@ -75,6 +75,7 @@ const Dictionary = () => {
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
+          autoFocus
           placeholder="Sök efter termer..."
           className="w-full p-2 bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532] rounded-md"
         />
