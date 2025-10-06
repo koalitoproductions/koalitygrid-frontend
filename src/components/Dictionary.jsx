@@ -1,12 +1,37 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../config/axios';
 
 const Dictionary = () => {
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [foundTerm, setFoundTerm] = useState(null);
   const [selectedResult, setSelectedResult] = useState(0);
+  const [termsList, setTermsList] = useState([]);
+
+  const fetchTermsList = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/api/terms/list/');
+      const grouped = Object.entries(
+        response.data.reduce((acc, term) => {
+          const firstLetter = term.name[0]?.toUpperCase() || 'Övrigt';
+          acc[firstLetter] = acc[firstLetter] || [];
+          acc[firstLetter].push({name: term.name, id: term.id});
+          return acc;
+        }, {})
+      )
+        .map(([letter, terms]) => ({ letter, terms: terms.sort() })) // Sort terms within each group
+        .sort((a, b) => a.letter.localeCompare(b.letter)); // Sort groups by letter
+      setTermsList(grouped);
+    } catch(error) {
+      console.error('Error fetching terms list:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const fetchSearchResults = async () => {
     try {
@@ -17,6 +42,10 @@ const Dictionary = () => {
       console.error('Error fetching calc tools:', error);
     }
   };
+
+  useEffect(() => {
+    fetchTermsList();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,9 +62,15 @@ const Dictionary = () => {
     }
   }, [debouncedQuery]);
 
-  const openTermDefinition = (name, description) => {
+  const openTermDefinition = async (id) => {
     setResults([]);
-    setFoundTerm({name: name, description: description});
+    try {
+      const response = await api.get(`/api/terms/${id}/`);
+      setFoundTerm({name: response.data.name, description: response.data.description});
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    } catch(error) {
+      console.error('There was a problem fetching the term definition:', error);
+    }
   };
 
   const handleSubmit = (event) => {
@@ -67,6 +102,8 @@ const Dictionary = () => {
     console.log(selectedResult);
   };
 
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className="justify-center">
       <h2 className="text-3xl font-semibold mb-6 text-white-200">Sök efter termer</h2>
@@ -85,7 +122,7 @@ const Dictionary = () => {
         {results.map((term, index) => (
           <li 
             key={term.id} 
-            onClick={() => openTermDefinition(term.name, term.description)}
+            onClick={() => openTermDefinition(term.id)}
             className={`p-2 cursor-pointer hover:bg-[#ffffee] ${index === selectedResult ? 'bg-blue-50' : ''}`}
           >
             {term.name}
@@ -99,6 +136,24 @@ const Dictionary = () => {
           <p className="text-gray-200">{foundTerm.description}</p>
         </div>
       }
+      <div className="mt-4">
+        {termsList.length ? (
+        termsList.map(group => (
+          <div key={group.letter}>
+            <h2 className="text-[#fa7532]">{group.letter}</h2>
+            <div className="flex flex-wrap">
+              {group.terms.map(term => (
+                <div className="mr-2 hover:cursor-pointer">
+                  <p onClick={() => openTermDefinition(term.id)} className="underline">{term.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div>No terms available</div>
+      )}
+      </div>
     </div>
   );
 };
