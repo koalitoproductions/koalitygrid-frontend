@@ -1,6 +1,4 @@
-import React from 'react';
-
-function ErrorPage() {
+const ErrorPage = () => {
   return (
     <div className="w-max h-max">
       <h1 className="text-xl">There was a problem...</h1>

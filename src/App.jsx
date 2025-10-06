@@ -6,6 +6,7 @@ import ConversionsSection from './components/ConversionsSection';
 import FormulasSection from './components/FormulasSection';
 import Dictionary from './components/Dictionary';
 import ErrorPage from './components/ErrorPage';
+import Favorites from './components/Favorites';
 import Login from './components/Login';
 import Register from './components/Register';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -29,6 +30,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <EditAccount />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/favoriter"
+              element={
+                <ProtectedRoute>
+                  <Favorites />
                 </ProtectedRoute>
               }
             />

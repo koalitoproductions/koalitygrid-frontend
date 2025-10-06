@@ -25,8 +25,8 @@ function Sidebar() {
 
   return (
     <aside className="bg-[#282828] min-w-[280px] max-w-[350px] p-6 border-r border-[#424242] flex flex-col h-full">
-      <div className="mb-6">
-        <img src={logo} alt="Sidebar Logo" className="w-full h-auto max-w-48 object-contain rounded-full border-4 border-gray-600 shadow-lg" />
+      <div className="mb-6 flex justify-center">
+        <img src={logo} alt="Sidebar Logo" className="w-full h-auto max-w-40 object-contain rounded-full border-4 border-gray-600 shadow-lg hover:scale-125 transition-transform duration-300 ease-in-out" />
       </div>
       {isLoggedIn &&
         <div className="items-center p-4">
