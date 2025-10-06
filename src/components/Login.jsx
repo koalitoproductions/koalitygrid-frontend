@@ -30,8 +30,8 @@ const handleLogin = async (e) => {
     });
     console.log('Login response:', response.data);
     const { access, refresh } = response.data;
-    if (access && refresh) {
-      login(access, refresh); // Pass both tokens
+    if (access && refresh && username) {
+      login(access, refresh, username); // Pass both tokens
       navigate('/berakningar');
     } else {
       throw new Error('No tokens received');

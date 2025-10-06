@@ -110,7 +110,7 @@ const handlePhotoUpload = async (e) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#1c1c1c]">
       <form onSubmit={handlePasswordChange} className="bg-[#282828] p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl text-[#e0e0e0] mb-4">Mitt konto</h2>
+        <h2 className="text-2xl text-[#e0e0e0] mb-4 text-center">Mitt konto - <span className="text-[#fa7532]">{localStorage.getItem('username')}</span></h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <div className="mb-4 text-center">
           <div className="relative inline-block">
@@ -119,7 +119,7 @@ const handlePhotoUpload = async (e) => {
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-[#fa7532]"
             />
-            {previewUrl !== 'http://localhost:8000/media/defaults/default.png' && (
+            {!previewUrl.endsWith('/media/defaults/default.png') && (
               <button
                 type="button"
                 onClick={handlePhotoDelete}

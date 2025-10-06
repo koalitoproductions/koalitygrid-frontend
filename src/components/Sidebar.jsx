@@ -28,6 +28,11 @@ function Sidebar() {
       <div className="mb-6">
         <img src={logo} alt="Sidebar Logo" className="w-full h-auto max-w-48 object-contain rounded-full border-4 border-gray-600 shadow-lg" />
       </div>
+      {isLoggedIn &&
+        <div className="items-center p-4">
+          <p className="font-bold">Välkommen, <span className="text-[#fa7532] font-bold">{localStorage.getItem('username')}</span>!</p>
+        </div>
+      }
       {allSections.map((section) => (
         <Link
           key={section.path}

@@ -6,9 +6,10 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('access_token'));
 
-const login = (accessToken, refreshToken) => {
+const login = (accessToken, refreshToken, username) => {
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('refresh_token', refreshToken);
+    localStorage.setItem('username', username);
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setIsLoggedIn(true);
   };
@@ -16,6 +17,7 @@ const login = (accessToken, refreshToken) => {
   const logout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('username');
     delete axios.defaults.headers.common['Authorization'];
     setIsLoggedIn(false);
   };
