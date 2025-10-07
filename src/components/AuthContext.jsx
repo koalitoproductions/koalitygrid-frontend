@@ -1,34 +1,42 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+
+import api from '../config/axios';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('access_token'));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const login = (accessToken, refreshToken, username) => {
-    localStorage.setItem('access_token', accessToken);
-    localStorage.setItem('refresh_token', refreshToken);
+  const login = (username) => {
     localStorage.setItem('username', username);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setIsLoggedIn(true);
   };
-
   const logout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
     localStorage.removeItem('username');
-    delete axios.defaults.headers.common['Authorization'];
     setIsLoggedIn(false);
   };
 
-  useEffect(() => {
-    // Optional: Validate token on mount
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  const checkAuth = async () => {
+    try {
+      await api.get('/api/dj-rest-auth/user/', { withCredentials: true });
+      setIsLoggedIn(true);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        try {
+          await api.post('/api/dj-rest-auth/token/refresh/', {}, { withCredentials: true });
+          await api.get('/api/dj-rest-auth/user/', { withCredentials: true });
+          setIsLoggedIn(true);
+        } catch (refreshErr) {
+          console.error('checkAuth refresh error:', refreshErr.response?.data);
+          setIsLoggedIn(false);
+        }
+      } else {
+        console.error('checkAuth error:', err.response?.data, err.response?.status);
+        setIsLoggedIn(false);
+      }
     }
-  }, []);
+  };
+  useEffect(() => { checkAuth(); }, []);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>

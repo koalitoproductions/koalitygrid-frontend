@@ -1,15 +1,21 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+
+import api from '../config/axios';
 
 function Logout() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout(); // Clear tokens and update auth state
-    navigate('/login'); // Redirect to login page
-  };
+const handleLogout = async () => {
+  try {
+    await api.post('api/dj-rest-auth/logout/', {}, { withCredentials: true });
+    logout();
+    navigate('/login');
+  } catch (err) {
+    console.error('Logout error:', err);
+  }
+};
 
   return (
     <button

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import api from '../config/axios';
 
 function Register() {
@@ -72,19 +73,18 @@ function Register() {
       return;
     }
     try {
-      const response = await api.post('auth/register/', {
+      const response = await api.post('api/dj-rest-auth/registration/', {
         username,
         email,
-        password,
-        confirm_password: confirmPassword,
-      });
-      console.log('Register response:', response.data);
+        password1: password,
+        password2: confirmPassword,
+      }, { withCredentials: true });
       if (response.status === 201) {
-        navigate('/login'); // Redirect to login after successful registration
+        navigate('/login');
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Registrering misslyckades');
-      console.error('Register error:', err.response ? err.response.data : err.message);
+      console.log('Error response:', err.response?.data); // Log full error
+      setError(err.response?.data?.non_field_errors?.[0] || err.response?.data?.username?.[0] || err.response?.data?.email?.[0] || 'Registrering misslyckades');
     }
   };
 

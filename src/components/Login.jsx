@@ -24,21 +24,17 @@ const handleLogin = async (e) => {
   setError('');
   setLoading(true);
   try {
-    const response = await api.post('auth/token/', {
-      username,
-      password,
-    });
-    console.log('Login response:', response.data);
-    const { access, refresh } = response.data;
-    if (access && refresh && username) {
-      login(access, refresh, username); // Pass both tokens
+    const response = await api.post(
+      'api/dj-rest-auth/login/', 
+      { username, password }, 
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      login(username);
       navigate('/berakningar');
-    } else {
-      throw new Error('No tokens received');
     }
   } catch (err) {
     setError('Inloggning misslyckades. Säker på att du använde rätt uppgifter?');
-    console.error('Login error:', err.response ? err.response.data : err.message);
   } finally {
     setLoading(false);
   }

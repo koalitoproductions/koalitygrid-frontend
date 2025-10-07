@@ -42,7 +42,7 @@ function EditAccount() {
 // Fetch current profile photo on mount
   useEffect(() => {
     if (isLoggedIn) {
-      api.get('auth/profile-photo/') // Adjust endpoint if needed
+      api.get('api/auth/profile-photo/', {withCredentials: true}) // Adjust endpoint if needed
         .then(response => {
           const photoUrl = response.data.profile_photo;
           setPreviewUrl(photoUrl);
@@ -59,9 +59,10 @@ function EditAccount() {
     setError('');
     setLoading(true);
     try {
-      const response = await api.post('auth/change-password/', {
+      const response = await api.post('api/auth/change-password/', {
         old_password: oldPassword,
         new_password: newPassword,
+        withCredentials: true,
       });
       console.log('Password change response:', response.data);
       if (response.status === 200) {
@@ -84,8 +85,9 @@ const handlePhotoUpload = async (e) => {
       const formData = new FormData();
       formData.append('profile_photo', file);
       try {
-        const response = await api.post('auth/profile-photo/', formData, {
+        const response = await api.post('api/auth/profile-photo/', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
+          withCredentials: true,
         });
         console.log('Photo upload response:', response.data);
         setPreviewUrl(response.data.photo_url);
@@ -98,7 +100,7 @@ const handlePhotoUpload = async (e) => {
 
   const handlePhotoDelete = async () => {
     try {
-      const response = await api.delete('auth/profile-photo/');
+      const response = await api.delete('api/auth/profile-photo/', {withCredentials: true});
       console.log('Photo delete response:', response.data);
       setPreviewUrl(response.data.photo_url); // Revert to default
     } catch (err) {
@@ -178,7 +180,7 @@ const handlePhotoUpload = async (e) => {
           type="submit" 
           disabled={!isPasswordsMatch || !oldPassword || !newPassword || loading}
           className="w-full bg-[#fa7532] text-[#e0e0e0] py-2 rounded hover:bg-[#fb8c4f] hover:cursor-pointer transition disabled:bg-gray-500 disabled:cursor-not-allowed">
-          {loading ? 'Ändrar lösenord...' : 'Ändra lösenord'} {/* Conditional text */}
+          {loading ? 'Ändrar lösenord...' : 'Ändra lösenord'}
         </button>
       </form>
     </div>
