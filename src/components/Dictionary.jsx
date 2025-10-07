@@ -139,15 +139,13 @@ const Dictionary = () => {
       <div className="mt-4">
         {termsList.length ? (
         termsList.map(group => (
-          <div key={group.letter}>
+          <div key={group.letter} className="mb-2 mt-2">
             <h2 className="text-[#fa7532]">{group.letter}</h2>
-            <div className="flex flex-wrap">
-              {group.terms.map(term => (
-                <div className="mr-2 hover:cursor-pointer">
-                  <p onClick={() => openTermDefinition(term.id)} className="underline">{term.name}</p>
-                </div>
-              ))}
-            </div>
+            {group.terms.map(term => (
+              <div className="hover:cursor-pointer">
+                <p onClick={() => openTermDefinition(term.id)} className="underline">{term.name}</p>
+              </div>
+            ))}
           </div>
         ))
       ) : (
