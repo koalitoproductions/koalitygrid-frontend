@@ -59,10 +59,10 @@ function EditAccount() {
     setError('');
     setLoading(true);
     try {
-      const response = await api.post('api/auth/change-password/', {
+      const response = await api.post('/api/dj-rest-auth/password/change/', {
         old_password: oldPassword,
-        new_password: newPassword,
-        withCredentials: true,
+        new_password1: newPassword,
+        new_password2: confirmNewPassword,
       });
       console.log('Password change response:', response.data);
       if (response.status === 200) {
@@ -71,8 +71,14 @@ function EditAccount() {
         navigate('/login'); // Redirect to login after logout
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Kunde inte ändra lösenordet');
-      console.error('Password change error:', err.response ? err.response.data : err.message);
+      setError(
+        err.response?.data?.old_password?.[0] ||
+        err.response?.data?.new_password1?.[0] ||
+        err.response?.data?.new_password2?.[0] ||
+        err.response?.data?.non_field_errors?.[0] ||
+        'Kunde inte ändra lösenordet'
+      );
+      console.error('Password change error:', err.response?.data, err.response?.status);
     } finally {
       setLoading(false);
     }
