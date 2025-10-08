@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -19,26 +19,26 @@ function Login() {
     }
   }, [isLoggedIn, navigate]); // Dependencies to re-run on state change
 
-const handleLogin = async (e) => {
-  e.preventDefault();
-  setError('');
-  setLoading(true);
-  try {
-    const response = await api.post(
-      'api/dj-rest-auth/login/', 
-      { username, password }, 
-      { withCredentials: true }
-    );
-    if (response.status === 200) {
-      login(username);
-      navigate('/berakningar');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const response = await api.post(
+        'api/dj-rest-auth/login/', 
+        { username, password, }, 
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        login(username);
+        navigate('/berakningar');
+      }
+    } catch (err) {
+      setError('Inloggning misslyckades. Säker på att du använde rätt uppgifter?');
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    setError('Inloggning misslyckades. Säker på att du använde rätt uppgifter?');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   // Only render the form if not logged in
   if (isLoggedIn) {

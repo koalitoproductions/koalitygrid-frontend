@@ -12,7 +12,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/token/refresh/')) {
       originalRequest._retry = true;
       try {
         await api.post('/api/dj-rest-auth/token/refresh/', {}, { withCredentials: true });

@@ -21,19 +21,8 @@ export function AuthProvider({ children }) {
       await api.get('/api/dj-rest-auth/user/', { withCredentials: true });
       setIsLoggedIn(true);
     } catch (err) {
-      if (err.response?.status === 401) {
-        try {
-          await api.post('/api/dj-rest-auth/token/refresh/', {}, { withCredentials: true });
-          await api.get('/api/dj-rest-auth/user/', { withCredentials: true });
-          setIsLoggedIn(true);
-        } catch (refreshErr) {
-          console.error('checkAuth refresh error:', refreshErr.response?.data);
-          setIsLoggedIn(false);
-        }
-      } else {
-        console.error('checkAuth error:', err.response?.data, err.response?.status);
-        setIsLoggedIn(false);
-      }
+      console.error('checkAuth error:', err.response?.data, err.response?.status);
+      setIsLoggedIn(false);
     }
   };
   useEffect(() => { checkAuth(); }, []);
