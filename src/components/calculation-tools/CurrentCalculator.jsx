@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 
-function CurrentCalculator({ onClose }) {
+const CurrentCalculator = () => {
   const [currentType, setCurrentType] = useState('enfas');
   const [calculationType, setCalculationType] = useState('voltage_power');
   const [voltage, setVoltage] = useState('');
@@ -115,15 +115,17 @@ function CurrentCalculator({ onClose }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div className="flex flex-col">
             <label className="calc-form-label">Typ av ström:</label>
-            <select
-              value={currentType}
-              onChange={(e) => setCurrentType(e.target.value)}
-              className="calc-form-select"
-            >
-              <option value="enfas">Enfas växelström</option>
-              <option value="trefas">Trefas växelström</option>
-              <option value="lik">Likström</option>
-            </select>
+            <div className="flex">
+              <select
+                value={currentType}
+                onChange={(e) => setCurrentType(e.target.value)}
+                className="calc-form-select"
+              >
+                <option value="enfas">Enfas växelström</option>
+                <option value="trefas">Trefas växelström</option>
+                <option value="lik">Likström</option>
+              </select>
+            </div>
           </div>
           <div className="flex flex-col">
             <label className="calc-form-label">Typ av beräkning:</label>

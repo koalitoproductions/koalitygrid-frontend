@@ -60,7 +60,6 @@ function CalculatorTemplate({ onClose }) {
 
   useKeyboardShortcuts({
     onEnter: calculate,
-    onEscape: onClose,
   });
 
   return (

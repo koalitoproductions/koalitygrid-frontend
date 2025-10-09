@@ -18,7 +18,7 @@
     }
 
     .calc-form-select {
-        @apply p-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532];
+        @apply w-full p-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:ring-[#fa7532] focus:border-[#fa7532];
     }
 
     .calc-form-select-split {
