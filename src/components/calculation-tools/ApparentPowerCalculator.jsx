@@ -6,7 +6,7 @@ const ApparentPowerCalculator = () => {
   const [voltage, setVoltage] = useState('');
   const [voltageUnit, setVoltageUnit] = useState('V');
   const [current, setCurrent] = useState('');
-  const [currentUnit, setCurrentUnit] = useState('W');
+  const [currentUnit, setCurrentUnit] = useState('A');
   const [result, setResult] = useState(null);
   const [errors, setErrors] = useState({});
 
