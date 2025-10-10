@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Tvingar fram en ny deploy fredag kväll
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_HOST ?? (console.warn('API_HOST not set, using default'), 'http://localhost:8000'),
   withCredentials: true,
