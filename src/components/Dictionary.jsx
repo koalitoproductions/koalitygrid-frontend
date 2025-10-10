@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../config/axios';
 
 const Dictionary = () => {
@@ -98,8 +97,9 @@ const Dictionary = () => {
       } else {
         setSelectedResult(0);
       }
+    } else if(event.key === 'Escape') {
+      setResults([]);
     }
-    console.log(selectedResult);
   };
 
   if (loading) return <div>Loading...</div>;
