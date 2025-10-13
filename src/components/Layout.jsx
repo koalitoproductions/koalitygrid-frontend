@@ -6,7 +6,7 @@ import FormulaModal from './FormulaModal';
 import InfoModal from './InfoModal';
 import { ModalProvider } from './ModalContext';
 
-function Layout({ children }) {
+const Layout = ({ children }) => {
   const [modalData, setModalData] = useState(null);
   const [showFormulaModal, setShowFormulaModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);

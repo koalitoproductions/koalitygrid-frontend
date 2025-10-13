@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function Modal({ isOpen, onClose, title, children, onShowFormula, onShowInfo, isTop }) {
+const Modal = ({ isOpen, onClose, title, children, onShowFormula, onShowInfo, isTop }) => {
   if (!isOpen) return null;
 
   const handleOverlayClick = (e) => {

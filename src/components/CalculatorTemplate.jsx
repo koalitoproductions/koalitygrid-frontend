@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 
-function CalculatorTemplate({ onClose }) {
+const CalculatorTemplate = ({ onClose }) => {
   const [voltage, setVoltage] = useState('');
   const [result, setResult] = useState(null);
   const [errors, setErrors] = useState({});

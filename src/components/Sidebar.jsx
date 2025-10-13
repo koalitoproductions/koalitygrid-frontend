@@ -3,7 +3,7 @@ import logo from '../assets/koalito.png';
 import { useAuth } from './AuthContext';
 import Logout from './Logout';
 
-function Sidebar() {
+const Sidebar = () => {
   // Check if user is logged in by verifying the access token
   const { isLoggedIn } = useAuth();
 

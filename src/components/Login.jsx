@@ -4,7 +4,7 @@ import { useAuth } from './AuthContext';
 
 import api from '../config/axios';
 
-function Login() {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
