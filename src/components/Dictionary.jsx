@@ -186,10 +186,10 @@ const Dictionary = () => {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed md:bottom-4 bottom-20 left-1/2 flex items-center justify-center bg-[#fa7532] text-white text-2xl p-3 rounded-full shadow-lg hover:bg-[#e5682b] transition hover:cursor-pointer w-12 h-12"
+          className="fixed md:bottom-4 bottom-20 left-1/2 flex items-center justify-center bg-orange-400 text-white text-2xl p-3 rounded-full shadow-lg hover:bg-orange-500 transition duration-300 ease-in-out hover:cursor-pointer w-12 h-12"
           title="Till toppen"
         >
-          ↑
+          <i class="fa-solid fa-arrow-up"></i>
         </button>
       )}
     </div>
