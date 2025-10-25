@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://api.koalitygrid.se/api/',
+  baseURL: 'https://api.koalitygrid.se/',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
