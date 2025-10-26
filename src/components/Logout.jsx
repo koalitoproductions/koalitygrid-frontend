@@ -3,7 +3,7 @@ import { useAuth } from './AuthContext';
 
 import api from '../config/axios';
 
-function Logout() {
+const Logout = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 

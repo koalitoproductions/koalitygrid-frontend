@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import { useEffect } from 'react';
 
-function InfoModal({ isOpen, onClose, title, info, isTop }) {
+const InfoModal = ({ isOpen, onClose, title, info, isTop }) => {
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();

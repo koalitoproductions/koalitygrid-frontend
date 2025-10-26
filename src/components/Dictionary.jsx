@@ -9,6 +9,7 @@ const Dictionary = () => {
   const [foundTerm, setFoundTerm] = useState(null);
   const [selectedResult, setSelectedResult] = useState(0);
   const [termsList, setTermsList] = useState([]);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   const fetchTermsList = async () => {
     try {
@@ -61,6 +62,14 @@ const Dictionary = () => {
     }
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 200);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const openTermDefinition = async (id) => {
     setResults([]);
     try {
@@ -102,6 +111,17 @@ const Dictionary = () => {
     }
   };
 
+  const scrollToLetter = (letter) => {
+    const element = document.getElementById(`letter-${letter}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -137,9 +157,20 @@ const Dictionary = () => {
         </div>
       }
       <div className="mt-4">
+        <div className="flex flex-wrap gap-2 mb-4">
+          {termsList.map(group => (
+            <button
+              key={group.letter}
+              onClick={() => scrollToLetter(group.letter)}
+              className="text-[#fa7532] hover:underline text-lg hover:cursor-pointer"
+            >
+              {group.letter}
+            </button>
+          ))}
+        </div>
         {termsList.length ? (
         termsList.map(group => (
-          <div key={group.letter} className="mb-2 mt-2">
+          <div key={group.letter} id={`letter-${group.letter}`} className="mb-2 mt-2">
             <h2 className="text-[#fa7532]">{group.letter}</h2>
             {group.terms.map(term => (
               <div className="hover:cursor-pointer">
@@ -149,9 +180,18 @@ const Dictionary = () => {
           </div>
         ))
       ) : (
-        <div>No terms available</div>
+        <div>Inga termer hittade</div>
       )}
       </div>
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed md:bottom-4 bottom-20 left-1/2 flex items-center justify-center bg-orange-400 text-white text-2xl p-3 rounded-full shadow-lg hover:bg-orange-500 transition duration-300 ease-in-out hover:cursor-pointer w-12 h-12"
+          title="Till toppen"
+        >
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+      )}
     </div>
   );
 };

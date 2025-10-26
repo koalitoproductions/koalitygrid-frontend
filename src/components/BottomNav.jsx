@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function BottomNav() {
+const BottomNav = () => {
   const sections = [
     { name: 'Beräkningar', path: '/berakningar', icon: 'fa-calculator' },
     { name: 'Omvandling', path: '/omvandling', icon: 'fa-exchange-alt' },
