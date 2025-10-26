@@ -84,7 +84,7 @@ const Dictionary = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (results.length > 0) {
-      openTermDefinition(results[selectedResult].name, results[selectedResult].description);
+      openTermDefinition(results[selectedResult].id, results[selectedResult].description);
     } else {
       fetchSearchResults();
     }
